@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: zk-config
+data:
+  zoo_servers.sh: |
+    #!/bin/sh
+    case "${ZOO_MY_ID}" in
+      "1")
+        echo "server.1=0.0.0.0:2888:3888 server.2=zoo2.pinpoint.pod.cluster.local:2888:3888 server.3=zoo3.pinpoint.pod.cluster.local:2888:3888"
+        ;;
+      "2")
+        echo "server.1=zoo1.pinpoint.pod.cluster.local:2888:3888 server.2=0.0.0.0:2888:3888 server.3=zoo3.pinpoint.pod.cluster.local:2888:3888"
+        ;;
+      
+      "3")
+        echo "server.1=zoo1.pinpoint.pod.cluster.local:2888:3888 server.2=zoo2.pinpoint.pod.cluster.local:2888:3888 server.3=0.0.0.0:2888:3888"
+        ;;
+    esac

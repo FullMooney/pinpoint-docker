@@ -1,0 +1,54 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  # name: {{ include "hbase.fullname" . }}
+  name: pinpoint-hbase
+  labels:
+    {{- include "hbase.labels" . | nindent 4 }}
+spec:
+  serviceName: {{ include "hbase.fullname" . }}
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      {{- include "hbase.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        {{- include "hbase.selectorLabels" . | nindent 8 }}
+    spec:
+      containers:
+        - name: {{ .Chart.Name }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - name: hbase-master-api
+              containerPort: 60000
+            - name: hbase-master-web-ui
+              containerPort: 16010
+            - name: regionserver-api
+              containerPort: 60020
+            - name: hbase-regionserver-web-ui
+              containerPort: 16030
+          envFrom:
+          - configMapRef:
+              name: pinpoint-config
+              
+          volumeMounts:
+            - name: hbase-data
+              mountPath: /home/pinpoint/hbase
+            - name: zookeeper
+              mountPaht: /home/zookeeper
+      volumes:
+        - name: zookeeper
+          persistentVolumeClaim:
+            claimName: zookeeper
+  volumeClaimTemplates:
+    - metadata:
+        name: hbase-data
+      spec:
+        accessModes: [ "ReadWriteOnce" ]
+        storageClassName: {{ .Values.global.storageClass }}
+        resources:
+          requests:
+            storage: 50Gi
+  

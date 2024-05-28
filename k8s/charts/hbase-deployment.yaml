@@ -1,0 +1,32 @@
+{{- if .Values.hbase.enabeld }}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "pinpoint.fullname" . }}-hbase
+  labes:
+    app: {{ include "pinpoint.name" . }}
+    component: hbase
+spec:
+  replicas: {{ .Values.hbase.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ include "pinpoint.name" . }}
+      component: hbase
+  template:
+    metadata:
+      labels: {{ include "pinpoint.name" . }}
+      component: hbase
+    spec:
+      containers:
+      - name: hbase
+        image: bitnami/hbase:{{ .Values.hbase.image.tag }}
+        ports:
+          - containerPort: 16010
+          - containerPort: 16020
+          - containerPort: 16030
+        resources:
+{{ toYaml .Values.resource | indent 12 }} 
+      nodeSelector: {{ toYaml .Values.nodeSelector | indent 8 }}     
+      tolerations: {{ toYaml .Values.tolerations | indent 8 }}     
+      affinity: {{ toYaml .Values.affinity | indent 8 }}     
+{{- end }}

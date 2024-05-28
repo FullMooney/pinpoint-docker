@@ -1,0 +1,22 @@
+apiVersion: v2
+name: pinpoint
+description: A Helm chart for Pinpoint APM on Kubernetes
+type: application
+version: 1.0.0
+appVersion: 3.6
+dependencies:
+  - name: zookeeper
+    version: 1.0.0
+    repository: file://./charts/zookeeper
+  - name: mysql
+    version: 1.0.0
+    repository: file://./charts/mysql
+  - name: hbase
+    version: 1.0.0
+    repository: file://./charts/hbase
+  - name: collector
+    version: 1.0.0
+    repository: file://./charts/collector
+  - name: web
+    version: 1.0.0
+    repository: file://./charts/web

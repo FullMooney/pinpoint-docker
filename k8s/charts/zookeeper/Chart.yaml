@@ -1,0 +1,7 @@
+apiVersion: v2
+name: zookeeper
+description: zookeeper Subchart for Pinpoint
+type: application
+version: 1.0.0
+appVersion: 3.4.13
+dependencies: []

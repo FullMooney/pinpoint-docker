@@ -1,0 +1,47 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: {{ include "zookeeper.fullname" . }}
+  labels:
+    {{- include "zookeeper.labels" . | nindent 4 }}
+spec:
+  serviceName: {{ include "zookeeper.fullname" . }}
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      {{- include "zookeeper.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        {{- include "zookeeper.selectorLabels" . | nindent 8 }}
+    spec:
+      subdomain: zoo
+      containers:
+        - name: {{ .Chart.Name }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - name: zookeeper
+              containerPort: 2181
+            - name: zookeeper-election
+              containerPort: 2888
+            - name: zookeeper-transport
+              containerPort: 3888
+          env:
+          - name: ZOO_MY_ID
+            valueFrom:
+              fieldRef:
+                fieldPath: metadata.annotations['order'] 
+          - name: ZOO_SERVERS
+            valueFrom:
+              configMapKeyRef:
+                name: zk-config
+                key: zoo_servers.sh
+          volumeMouts:
+            - name: config-volume
+              mountPath: /etc/zoo
+      volumes:
+        - name: config-volume
+          configMap:
+            name: zk-config
+          

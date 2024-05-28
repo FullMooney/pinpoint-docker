@@ -1,0 +1,12 @@
+replicaCount: 3
+
+image:
+  repository: zookeeper
+  pullPolicy: IfNotPresent
+  tag: 3.4.13
+
+allowAnonymousLogin: true
+
+service:
+  type: ClusterIP
+  port: 2181
