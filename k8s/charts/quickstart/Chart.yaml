@@ -1,6 +1,6 @@
 apiVersion: v2
-name: hbase
-description: HBase Subchart for Pinpoint
+name: quickstart
+description: quickstart Subchart for Pinpoint
 type: application
 version: 1.0.0
 appVersion: 3.6
