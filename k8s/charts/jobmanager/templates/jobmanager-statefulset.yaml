@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: StatefulSet
 metadata:
   # name: {{ include "jobmanager.fullname" . }}
-  name: jobmanager
+  name: pinpoint-flink-jobmanager
   labels:
     {{- include "jobmanager.labels" . | nindent 4 }}
 spec:
@@ -17,7 +17,7 @@ spec:
         {{- include "jobmanager.selectorLabels" . | nindent 8 }}
     spec:
       containers:
-        - name: {{ .Chart.Name }}
+        - name: pinpoint-flink-jobmanager
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
@@ -28,8 +28,13 @@ spec:
           - -p 
           - 1 pinpoint-flink-job.jar 
           - -spring.profiles.active release"
-          envFrom:
-          - configMapRef:
-              name: pinpoint-config
+          env:
+          - name: JOB_MANAGER_RPC_ADDRESS
+            value: jobmanager.pinpoint.svc.cluster.local
+          - name: PINPOINT_ZOOKEEPER_ADDRESS
+            valueFrom:
+              configMapKeyRef:
+                name: pinpoint-config
+                key: PINPOINT_ZOOKEEPER_ADDRESS
 
   

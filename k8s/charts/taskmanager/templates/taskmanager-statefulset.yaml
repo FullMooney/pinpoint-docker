@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  # name: {{ include "taskmanager.fullname" . }}
+  name: pinpoint-flink-taskmanager
+  labels:
+    {{- include "taskmanager.labels" . | nindent 4 }}
+spec:
+  serviceName: {{ include "taskmanager.fullname" . }}
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      {{- include "taskmanager.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        {{- include "taskmanager.selectorLabels" . | nindent 8 }}
+    spec:
+      containers:
+        - name: pinpoint-flink-taskmanager
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - containerPort: 6121
+            - containerPort: 6122
+            - containerPort: 19994
+          env:
+          - name: JOB_MANAGER_RPC_ADDRESS
+            value: jobmanager.pinpoint.svc.cluster.local
+
+  

@@ -3,9 +3,10 @@
 replicaCount: 1
 
 image:
-  repository: pinpointdocker/pinpoint-flink
-  tag: latest
+  repository: redis
+  tag: 7.0.14
   imagePullPolicy: IfNotPresent
 
 service:
   type: ClusterIP
+  port: 6379

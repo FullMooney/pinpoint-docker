@@ -2,6 +2,9 @@
 
 replicaCount: 1
 
+global:
+  storageClass: nfs-client
+
 zookeeper:
   enabled: true
   auth:
