@@ -1,0 +1,45 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  # name: {{ include "collector.fullname" . }}
+  name: pinpoint-collector
+  labels:
+    {{- include "collector.labels" . | nindent 4 }}
+spec:
+  serviceName: {{ include "collector.fullname" . }}
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      {{- include "collector.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        {{- include "collector.selectorLabels" . | nindent 8 }}
+    spec:
+      containers:
+        - name: {{ .Chart.Name }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - containerPort: 8079
+          envFrom:
+          - configMapRef:
+              name: pinpoint-config
+          volumeMounts:
+            - name: data-volume
+              mountPath: /pinpoint-agent
+      volumes:
+        - name: data-volume
+          persistentVolumeClaim:
+            claimName: data-volume
+  volumeClaimTemplates:
+    - metadata:
+        name: data-volume
+      spec:
+        accessModes: [ "ReadWriteMany" ]
+        storageClassName: {{ .Values.global.storageClass }}
+        resources:
+          requests:
+            storage: 50Gi
+
+  

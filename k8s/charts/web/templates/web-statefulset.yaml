@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  # name: {{ include "hbase.fullname" . }}
+  name: pinpoint-hbase
+  labels:
+    {{- include "hbase.labels" . | nindent 4 }}
+spec:
+  serviceName: {{ include "hbase.fullname" . }}
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      {{- include "hbase.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        {{- include "hbase.selectorLabels" . | nindent 8 }}
+    spec:
+      containers:
+        - name: {{ .Chart.Name }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - name: thrift-api
+              containerPort: 9997
+            - name: web-server-port
+              containerPort: 8080
+          envFrom:
+          - configMapRef:
+              name: pinpoint-config
+
+  

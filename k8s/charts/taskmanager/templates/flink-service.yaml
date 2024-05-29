@@ -1,0 +1,27 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "flink.fullname" . }}
+  labels:
+    {{- include "flink.labels" . | nindent 4 }}
+spec:
+  type: {{ .Values.service.type }}
+  ports:
+    - protocol: TCP
+      port: 6123
+      targetPort: 6123
+      name: jobmanager
+    - protocol: TCP
+      port: 6121
+      targetPort: 6121
+      name: taskmanager-ipc
+    - protocol: TCP
+      port: 6122
+      targetPort: 6122
+      name: taskmanager-data-exchange
+    - protocol: TCP
+      port: 19994
+      targetPort: 19994
+      name: taskmanager-metric
+  selector:
+    {{- include "flink.selectorLabels" . | nindent 4 }}

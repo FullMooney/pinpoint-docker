@@ -1,0 +1,43 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "collector.fullname" . }}
+  labels:
+    {{- include "collector.labels" . | nindent 4 }}
+spec:
+  type: {{ .Values.service.type }}
+  ports:
+    - protocol: TCP
+      port: 9991
+      targetPort: 9991
+      name: collector-receiver-grpc-agent-port
+    - protocol: TCP
+      port: 9992
+      targetPort: 9992
+      name: collector-receiver-grpc-stat-port
+    - protocol: TCP
+      port: 9993
+      targetPort: 9993
+      name: collector-receiver-grpc-span-port
+    - protocol: TCP
+      port: 9994
+      targetPort: 9994
+      name: collector-receiver-base-port
+    - protocol: TCP
+      port: 9995
+      targetPort: 9995
+      name: collector-receiver-stat-tcp-port
+    - protocol: TCP
+      port: 9996
+      targetPort: 9996
+      name: collector-receiver-span-tcp-port
+    - protocol: UDP
+      port: 9995
+      targetPort: 9995
+      name: collector-receiver-stat-udp-port
+    - protocol: UDP
+      port: 9996
+      targetPort: 9996
+      name: collector-receiver-span-udp-port
+  selector:
+    {{- include "collector.selectorLabels" . | nindent 4 }}

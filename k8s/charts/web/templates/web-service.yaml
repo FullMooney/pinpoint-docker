@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "hbase.fullname" . }}
+  labels:
+    {{- include "hbase.labels" . | nindent 4 }}
+spec:
+  type: {{ .Values.service.type }}
+  ports:
+    - port: {{ .Values.service.port }}
+      targetPort: web-server-port
+    - port: 9997
+      targetPort: thrift
+  selector:
+    {{- include "hbase.selectorLabels" . | nindent 4 }}

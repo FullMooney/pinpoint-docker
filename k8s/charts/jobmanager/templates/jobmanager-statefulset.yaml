@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  # name: {{ include "jobmanager.fullname" . }}
+  name: jobmanager
+  labels:
+    {{- include "jobmanager.labels" . | nindent 4 }}
+spec:
+  serviceName: {{ include "jobmanager.fullname" . }}
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      {{- include "jobmanager.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        {{- include "jobmanager.selectorLabels" . | nindent 8 }}
+    spec:
+      containers:
+        - name: {{ .Chart.Name }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - containerPort: 6123
+            - containerPort: 8081
+          command:
+          - standalone-job 
+          - -p 
+          - 1 pinpoint-flink-job.jar 
+          - -spring.profiles.active release"
+          envFrom:
+          - configMapRef:
+              name: pinpoint-config
+
+  

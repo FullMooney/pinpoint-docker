@@ -3,10 +3,10 @@
 replicaCount: 1
 
 image:
-  repository: pinpointdocker/pinpoint-hbase
+  repository: pinpointdocker/pinpoint-collector
   tag: latest
   imagePullPolicy: IfNotPresent
 
 service:
   type: ClusterIP
-  
+  port: 3306

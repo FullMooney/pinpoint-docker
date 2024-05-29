@@ -7,7 +7,21 @@ metadata:
 spec:
   type: {{ .Values.service.type }}
   ports:
-    - port: {{ .Values.service.port }}
-      targetPort: hbase
+    - protocol: TCP
+      port: 60000
+      targetPort: 60000
+      name: hbase-master-api
+    - protocol: TCP
+      port: 16010
+      targetPort: 16010
+      name: hbase-master-web-ui
+    - protocol: TCP
+      port: 60020
+      targetPort: 60020
+      name: regionserver-api
+    - protocol: TCP
+      port: 16030
+      targetPort: 16030
+      name: hbase-regionserver-web-ui
   selector:
     {{- include "hbase.selectorLabels" . | nindent 4 }}

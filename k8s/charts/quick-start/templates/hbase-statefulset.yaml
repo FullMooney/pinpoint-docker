@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  # name: {{ include "quickstart.fullname" . }}
+  name: pinpoint-quickstart
+  labels:
+    {{- include "quickstart.labels" . | nindent 4 }}
+spec:
+  serviceName: {{ include "quickstart.fullname" . }}
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      {{- include "quickstart.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        {{- include "quickstart.selectorLabels" . | nindent 8 }}
+    spec:
+      containers:
+        - name: {{ .Chart.Name }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - name: quickstart-master-api
+              containerPort: 60000
+          env:
+          - name: JAVA_OPTS
+            value: "-javaagent:/pinpoint-agent/pinpoint-bootstrap.jar -Dpinpoint.agentId=${AGENT_ID} -Dpinpoint.applicationName=${APP_NAME} -Dpinpoint.profiler.profiles.active=${SPRING_PROFILES}"              
+          volumeMounts:
+            - name: data-volume
+              mountPath: /pinpoint-agent
+      volumes:
+        - name: data-volume
+          persistentVolumeClaim:
+            claimName: data-volume
+  

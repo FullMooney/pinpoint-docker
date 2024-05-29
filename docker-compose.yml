@@ -55,7 +55,6 @@ services:
       sed -i '/^--/d' /docker-entrypoint-initdb.d/CreateTableStatement-mysql.sql &&
       sed -i '/^--/d' /docker-entrypoint-initdb.d/SpringBatchJobRepositorySchema-mysql.sql &&
       docker-entrypoint.sh mysqld
-      "
     ports:
       - "3306:3306"
     environment:

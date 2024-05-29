@@ -1,0 +1,7 @@
+apiVersion: v2
+name: agent
+description: agent Subchart for Pinpoint
+type: application
+version: 1.0.0
+appVersion: 3.6
+dependencies: []

@@ -3,10 +3,10 @@
 replicaCount: 1
 
 image:
-  repository: pinpointdocker/pinpoint-hbase
-  tag: latest
+  repository: pinpointdocker/pinpoint-quickstart
+  tag: 2.5.4
   imagePullPolicy: IfNotPresent
 
 service:
   type: ClusterIP
-  
+  port: 8080

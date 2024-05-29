@@ -3,10 +3,9 @@
 replicaCount: 1
 
 image:
-  repository: pinpointdocker/pinpoint-hbase
+  repository: pinpointdocker/pinpoint-batch
   tag: latest
   imagePullPolicy: IfNotPresent
 
 service:
   type: ClusterIP
-  
