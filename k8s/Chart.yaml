@@ -11,12 +11,30 @@ dependencies:
   - name: mysql
     version: 1.0.0
     repository: file://./charts/mysql
+  - name: redis
+    version: 1.0.0
+    repository: file://./charts/redis
+  - name: jobmanager
+    version: 1.0.0
+    repository: file://./charts/jobmanager
+  - name: taskmanager
+    version: 1.0.0
+    repository: file://./charts/taskmanager
   - name: hbase
     version: 1.0.0
     repository: file://./charts/hbase
   - name: collector
     version: 1.0.0
     repository: file://./charts/collector
+  - name: batch
+    version: 1.0.0
+    repository: file://./charts/batch
   - name: web
     version: 1.0.0
     repository: file://./charts/web
+  - name: agent
+    version: 1.0.0
+    repository: file://./charts/agent
+  - name: quickstart
+    version: 1.0.0
+    repository: file://./charts/quickstart
