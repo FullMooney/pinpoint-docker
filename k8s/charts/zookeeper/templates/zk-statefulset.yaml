@@ -37,7 +37,7 @@ spec:
               configMapKeyRef:
                 name: zk-config
                 key: zoo_servers.sh
-          volumeMouts:
+          volumeMounts:
             - name: config-volume
               mountPath: /etc/zoo
       volumes:

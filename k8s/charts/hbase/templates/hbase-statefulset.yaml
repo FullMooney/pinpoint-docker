@@ -37,7 +37,7 @@ spec:
             - name: hbase-data
               mountPath: /home/pinpoint/hbase
             - name: zookeeper
-              mountPaht: /home/zookeeper
+              mountPath: /home/zookeeper
       volumes:
         - name: zookeeper
           persistentVolumeClaim:

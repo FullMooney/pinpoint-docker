@@ -3,7 +3,7 @@ kind: Service
 metadata:
   name: taskmanager
   labels:
-    {{- include "flink.labels" . | nindent 4 }}
+    {{- include "taskmanager.labels" . | nindent 4 }}
 spec:
   type: {{ .Values.service.type }}
   ports:
@@ -20,4 +20,4 @@ spec:
       targetPort: 19994
       name: taskmanager-metric
   selector:
-    {{- include "flink.selectorLabels" . | nindent 4 }}
+    {{- include "taskmanager.selectorLabels" . | nindent 4 }}

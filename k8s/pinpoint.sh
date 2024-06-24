@@ -1,6 +1,6 @@
 kubectl create ns pinpoint
 
-kubectl create cm pinpoint-config -n pinpoint  --from-file=../.env
+kubectl create cm pinpoint-config -n pinpoint  --from-env-file=../.env
 
 kubectl create -f chart/zookeeper/zk-statefulset.yaml -n pinpoint
 

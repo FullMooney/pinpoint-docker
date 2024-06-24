@@ -1,20 +1,20 @@
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
-  # name: {{ include "collector.fullname" . }}
-  name: pinpoint-collector
+  # name: {{ include "agent.fullname" . }}
+  name: pinpoint-agent
   labels:
-    {{- include "collector.labels" . | nindent 4 }}
+    {{- include "agent.labels" . | nindent 4 }}
 spec:
-  serviceName: {{ include "collector.fullname" . }}
+  serviceName: {{ include "agent.fullname" . }}
   replicas: {{ .Values.replicaCount }}
   selector:
     matchLabels:
-      {{- include "collector.selectorLabels" . | nindent 6 }}
+      {{- include "agent.selectorLabels" . | nindent 6 }}
   template:
     metadata:
       labels:
-        {{- include "collector.selectorLabels" . | nindent 8 }}
+        {{- include "agent.selectorLabels" . | nindent 8 }}
     spec:
       containers:
         - name: {{ .Chart.Name }}
