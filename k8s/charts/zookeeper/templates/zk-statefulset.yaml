@@ -29,7 +29,7 @@ spec:
               containerPort: 3888
           env:
           - name: ZOO_MY_ID
-            value: {{ index .Values.id (printf "pinpoint-zookeeper-%d" (subtract .Values.replicaCount 1)) }}
+            value: {{ index .Values.id (printf "pinpoint-zookeeper-%d" (.Values.replicaCount | add -1)) }}
           - name: ZOO_SERVERS
             value: server.1=pinpoint-zookeeper-0.pinpoint-zookeeper-headless.pinpoint.svc.cluster.local:2888:3888 server.2=pinpoint-zookeeper-1.pinpoint-zookeeper-headless.pinpoint.svc.cluster.local:2888:3888 server.3=pinpoint-zookeeper-2.pinpoint-zookeeper-headless.pinpoint.svc.cluster.local:2888:3888
           volumeMounts:
