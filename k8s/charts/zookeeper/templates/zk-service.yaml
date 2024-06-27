@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ include "zookeeper.fullname" . }}1
+  name: {{ include "zookeeper.fullname" . }}
   labels:
     {{- include "zookeeper.labels" . | nindent 4 }}
 spec:
@@ -11,3 +11,21 @@ spec:
       targetPort: zookeeper
   selector:
     {{- include "zookeeper.selectorLabels" . | nindent 4 }}
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "zookeeper.fullname" . }}-headless
+  labels:
+    {{- include "zookeeper.labels" . | nindent 4 }}
+spec:
+  type: {{ .Values.service.type }}
+  clusterIP: None
+  ports:
+    - port: {{ .Values.service.port }}
+      targetPort: zookeeper
+  selector:
+    {{- include "zookeeper.selectorLabels" . | nindent 4 }}
+

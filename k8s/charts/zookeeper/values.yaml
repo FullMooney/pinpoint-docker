@@ -10,3 +10,9 @@ allowAnonymousLogin: true
 service:
   type: ClusterIP
   port: 2181
+
+id:
+  pinpoint-zookeeper-0: 1
+  pinpoint-zookeeper-1: 2
+  pinpoint-zookeeper-2: 3
+

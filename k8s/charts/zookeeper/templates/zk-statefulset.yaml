@@ -29,19 +29,14 @@ spec:
               containerPort: 3888
           env:
           - name: ZOO_MY_ID
-            valueFrom:
-              fieldRef:
-                fieldPath: metadata.annotations['order'] 
+            value: {{ index .Values.id (printf "pinpoint-zookeeper-%d" (subtract .Values.replicaCount 1)) }}
           - name: ZOO_SERVERS
-            valueFrom:
-              configMapKeyRef:
-                name: zk-config
-                key: zoo_servers.sh
+            value: server.1=pinpoint-zookeeper-0.pinpoint-zookeeper-headless.pinpoint.svc.cluster.local:2888:3888 server.2=pinpoint-zookeeper-1.pinpoint-zookeeper-headless.pinpoint.svc.cluster.local:2888:3888 server.3=pinpoint-zookeeper-2.pinpoint-zookeeper-headless.pinpoint.svc.cluster.local:2888:3888
           volumeMounts:
             - name: config-volume
               mountPath: /etc/zoo
-      volumes:
-        - name: config-volume
-          configMap:
-            name: zk-config
+      # volumes:
+      #   - name: config-volume
+      #     configMap:
+      #       name: zk-config
           
