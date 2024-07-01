@@ -3,6 +3,7 @@ kind: ConfigMap
 metadata:
   name: zk-config
 data:
-  pinpoint-zookeeper-0: "1"
-  pinpoint-zookeeper-1: "2"
-  pinpoint-zookeeper-2: "3"
+  ZOO_SERVERS: >-
+    pinpoint-zookeeper-0.zoo-zookeeper-headless.pinpoint.svc.cluster.local:2888:3888::1
+    pinpoint-zookeeper-1.zoo-zookeeper-headless.pinpoint.svc.cluster.local:2888:3888::2
+    pinpoint-zookeeper-2.zoo-zookeeper-headless.pinpoint.svc.cluster.local:2888:3888::3
