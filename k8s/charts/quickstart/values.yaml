@@ -4,7 +4,7 @@ replicaCount: 1
 
 image:
   repository: pinpointdocker/pinpoint-quickstart
-  tag: 2.5.4
+  tag: 3.0.0
   imagePullPolicy: IfNotPresent
 
 service:

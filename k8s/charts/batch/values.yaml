@@ -4,7 +4,7 @@ replicaCount: 1
 
 image:
   repository: pinpointdocker/pinpoint-batch
-  tag: latest
+  tag: 3.0.0
   imagePullPolicy: IfNotPresent
 
 service:

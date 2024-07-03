@@ -25,6 +25,5 @@ spec:
           envFrom:
           - configMapRef:
               name: pinpoint-config
-            storage: 50Gi
 
   

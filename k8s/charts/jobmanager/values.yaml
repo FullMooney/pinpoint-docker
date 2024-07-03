@@ -3,8 +3,8 @@
 replicaCount: 1
 
 image:
-  repository: pinpointdocker/pinpoint-collector
-  tag: latest
+  repository: pinpointdocker/pinpoint-flink
+  tag: 3.0.0
   imagePullPolicy: IfNotPresent
 
 service:
